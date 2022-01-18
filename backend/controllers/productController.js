@@ -25,9 +25,10 @@ exports.getProductsDetails = catchAsyncError(async (req, res, next) => {
     res.status(200).json({ success: true, product })
 });
 
-// only ADMIN can create
+// only ADMIN can create, update and delete products
 
 exports.createProduct = catchAsyncError(async (req, res, next) => {
+    req.body.user = req.user.id;
     const product = await Product.create(req.body);
     res.status(201).json({ success: true, product });
 });
