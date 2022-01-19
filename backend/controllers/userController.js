@@ -7,11 +7,6 @@ const crypto = require('crypto');
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {
     const { name, email, password } = req.body;
-    // let user = await User.findOne({email});
-
-    // if (user) {
-    //     return next(new ErrorHandler("Email is already in use", 401));
-    // }
     const user = await User.create({
         name, email, password,
         avatar: {
@@ -79,7 +74,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 exports.resetPassword = catchAsyncError(async (req, res, next) => {
     const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
     const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
-    
+
     if (!user) {
         return next(new ErrorHandler("Reset password is invalid or expired", 400));
     }
