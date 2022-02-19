@@ -71,4 +71,4 @@ userSchema.methods.getResetPasswordToken = function () {
 };
 
 
-module.exports = mongoose.model("USer", userSchema);
+module.exports = mongoose.model("User", userSchema);
