@@ -8,8 +8,15 @@ import ProductDetails from './component/Product/ProductDetails.js';
 import Products from './component/Product/Products.js';
 import LoginSignUp from './component/User/LoginSignUp';
 // import Search from './component/Product/Search.js';
+import store from './store';
+import { useEffect } from 'react';
+import { loadUser } from './actions/userAction';
 
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  })
+
   return (
     <Router>
       <Header />
