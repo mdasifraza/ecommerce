@@ -11,21 +11,31 @@ import LoginSignUp from './component/User/LoginSignUp';
 import store from './store';
 import { useEffect } from 'react';
 import { loadUser } from './actions/userAction';
+import UserOptions from './component/Layout/Header/UserOptions.js';
+import { useSelector } from 'react-redux';
+import Profile from './component/User/Profile.js';
+import ProtectedRoute from './component/Route/ProtectedRoute';
+import UpdateProfile from './component/User/UpdateProfile.js';
 
 function App() {
+  const { isAthenticated, user } = useSelector(state => state.user);
+
   useEffect(() => {
     store.dispatch(loadUser());
-  })
+  }, [])
 
   return (
     <Router>
-      <Header />
+      <Header isAthenticated={isAthenticated} />
+      {/* {isAthenticated && <UserOptions user={user} />} */}
       <Routes>
         <Route exact="true" path="/" element={<Home />} />
         <Route exact="true" path="/product/:id" element={<ProductDetails />} />
         <Route exact="true" path="/products" element={<Products />} />
         {/* <Route path="/products/:keyword" element={<Products />} />
         <Route exact="true" path="/search" element={<Search />} /> */}
+        <Route exact="true" path="/profile" element={<ProtectedRoute Component={Profile} />} />
+        <Route exact="true" path="/me/update" element={<ProtectedRoute Component={UpdateProfile} />} />
         <Route exact="true" path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />

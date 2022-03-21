@@ -2,8 +2,13 @@ import React from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import UserOptions from './UserOptions';
+import { useSelector } from 'react-redux';
+
 
 const Header = () => {
+    const { isAthenticated, user } = useSelector(state => state.user)
+
     return (
         <Navbar bg="primary" expand="lg">
             <Container fluid>
@@ -37,9 +42,17 @@ const Header = () => {
                         />
                         <Button variant="outline-success">Search</Button>
                     </Form> */}
-                    <Nav.Link as={Link} to="/search"><AiOutlineSearch size={28} color="white" /></Nav.Link>
-                    <Button><AiOutlineShoppingCart size={28} /></Button>
-                    <Nav.Link as={Link} to="/login"><AiOutlineUser size={28} color="white" /></Nav.Link>
+                    <Nav.Link as={Link} to="/search">
+                        <AiOutlineSearch size={28} color="white" />
+                    </Nav.Link>
+                    <Button>
+                        <AiOutlineShoppingCart size={28} />
+                    </Button>
+                    {!isAthenticated ?
+                        (<Nav.Link as={Link} to="/login">
+                            <AiOutlineUser size={28} color="white" />
+                        </Nav.Link>) :
+                        (<UserOptions user={user} />)}
                     {/* <Button><AiOutlineUser size={28} /></Button> */}
                 </Navbar.Collapse>
             </Container>

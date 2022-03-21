@@ -69,7 +69,7 @@ const LoginSignUp = () => {
             dispatch(clearErrors());
         }
         if (isAthenticated) {
-            history("/account");
+            history("/profile");
         }
     }, [dispatch, error, alert, isAthenticated, history])
 
