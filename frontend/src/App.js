@@ -11,16 +11,17 @@ import LoginSignUp from './component/User/LoginSignUp';
 import store from './store';
 import { useEffect } from 'react';
 import { loadUser } from './actions/userAction';
-import UserOptions from './component/Layout/Header/UserOptions.js';
-import { useSelector } from 'react-redux';
+// import UserOptions from './component/Layout/Header/UserOptions.js';
+// import { useSelector } from 'react-redux';
 import Profile from './component/User/Profile.js';
 import ProtectedRoute from './component/Route/ProtectedRoute';
 import UpdateProfile from './component/User/UpdateProfile.js';
 import UpdatePassword from './component/User/UpdatePassword.js';
 import ForgotPassword from './component/User/ForgotPassword.js';
+import ResetPassword from './component/User/ResetPassword.js';
 
 function App() {
-  const { isAthenticated, user } = useSelector(state => state.user);
+  // const { isAthenticated, user } = useSelector(state => state.user);
 
   useEffect(() => {
     store.dispatch(loadUser());
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <Router>
-      <Header isAthenticated={isAthenticated} />
+      <Header/>
       {/* {isAthenticated && <UserOptions user={user} />} */}
       <Routes>
         <Route exact="true" path="/" element={<Home />} />
@@ -40,6 +41,7 @@ function App() {
         <Route exact="true" path="/me/update" element={<ProtectedRoute Component={UpdateProfile} />} />
         <Route exact="true" path="/password/update" element={<ProtectedRoute Component={UpdatePassword} />} />
         <Route exact="true" path="/password/forgot" element={<ForgotPassword />} />
+        <Route exact="true" path="/password/reset/:token" element={<ResetPassword />} />
         <Route exact="true" path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />

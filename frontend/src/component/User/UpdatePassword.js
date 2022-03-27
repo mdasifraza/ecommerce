@@ -52,7 +52,7 @@ const UpdatePassword = () => {
                 <>
                     <MetaData title="Change Password" />
                     <div className="updatePasswordContainer">
-                        <div className="updatePasswordeBox">
+                        <div className="updatePasswordBox">
                             <h2 className="updatePasswordHeading">Update Password</h2>
                             <form className="updatePasswordForm" encType="multipart/form-data" onSubmit={updatePasswordSubmit}>
                                 <div className="loginPassword">

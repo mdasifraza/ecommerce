@@ -58,7 +58,8 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
     }
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+    // const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
     const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\n If you have not requested this email than please ignore it`;
 
     try {
@@ -82,7 +83,7 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
     const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
 
     if (!user) {
-        return next(new ErrorHandler("Reset password is invalid or expired", 400));
+        return next(new ErrorHandler("Reset password token is invalid or expired", 400));
     }
     if (req.body.password !== req.body.confirmPassword) {
         return next(new ErrorHandler("Password does not match", 400));
@@ -92,7 +93,8 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
     user.resetPasswordExpire = undefined;
 
     await user.save();
-    sendToken(user, 200, res);
+    // sendToken(user, 200, res);
+    res.status(200).json({ success: true, user });
 });
 
 //for me details
@@ -122,8 +124,7 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email
     }
-
-    if (req.body.avatar !== "") {
+    if (req.body.avatar !== "" && req.body.avatar !== undefined) {
         const user = await User.findById(req.user.id);
         const imageId = user.avatar.public_id;
         await cloudinary.v2.uploader.destroy(imageId);

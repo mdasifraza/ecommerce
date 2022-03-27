@@ -10,6 +10,9 @@ import {
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAIL,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL,
     CLEAR_ERRORS
 } from '../constants/profileConstant.js';
 
@@ -28,6 +31,7 @@ export const profileReducer = (state = { user: {} }, action) => {
                 loading: false,
                 isUpdated: action.payload
             }
+
         case UPDATE_PROFILE_FAIL:
         case UPDATE_PASSWORD_FAIL:
             return {
@@ -50,9 +54,11 @@ export const profileReducer = (state = { user: {} }, action) => {
             return state;
     }
 };
+
 export const forgotPasswordReducer = (state = { user: {} }, action) => {
     switch (action.type) {
         case FORGOT_PASSWORD_REQUEST:
+        case RESET_PASSWORD_REQUEST:
             return {
                 ...state,
                 loading: true,
@@ -64,7 +70,14 @@ export const forgotPasswordReducer = (state = { user: {} }, action) => {
                 loading: false,
                 message: action.payload
             }
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: action.payload
+            }
         case FORGOT_PASSWORD_FAIL:
+        case RESET_PASSWORD_FAIL:
             return {
                 ...state,
                 loading: false,

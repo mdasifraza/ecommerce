@@ -10,6 +10,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_PROFILE_RESET } from '../../constants/profileConstant';
 import MetaData from '../Layout/MetaData';
+import Profile from '../../images/Profile.png';
 
 const UpdateProfile = () => {
     const dispatch = useDispatch();
@@ -21,20 +22,23 @@ const UpdateProfile = () => {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [avatar, setAvatar] = useState("/Profile.png");
-    const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+    const [avatar, setAvatar] = useState(Profile);
+    const [avatarPreview, setAvatarPreview] = useState(Profile);
+    const [checkAvatarChange, setCheckAvatarChange] = useState(false);
 
     const updateProfileSubmit = (e) => {
         e.preventDefault();
-
         const myForm = new FormData();
         myForm.set("name", name);
         myForm.set("email", email);
-        myForm.set("avatar", avatar);
+        if (checkAvatarChange) {
+            myForm.set("avatar", avatar);
+        }
         dispatch(updateProfile(myForm));
     }
 
     const updateProfileDataChange = (e) => {
+        setCheckAvatarChange(true);
         const reader = new FileReader();
         reader.onload = () => {
             if (reader.readyState === 2) {
@@ -58,6 +62,7 @@ const UpdateProfile = () => {
         }
 
         if (isUpdated) {
+            setCheckAvatarChange(false);
             alert.success("Profile Updated Successfully");
             dispatch(loadUser());
             history("/profile");

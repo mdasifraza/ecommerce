@@ -3,7 +3,6 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { urlToHttpOptions } = require('url');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -40,7 +39,6 @@ const userSchema = new mongoose.Schema({
     },
     resetPasswordToken: String,
     resetPasswordExpire: String,
-
 });
 
 userSchema.pre("save", async function (next) {
