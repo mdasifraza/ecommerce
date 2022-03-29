@@ -45,9 +45,9 @@ const Header = () => {
                     <Nav.Link as={Link} to="/search">
                         <AiOutlineSearch size={28} color="white" />
                     </Nav.Link>
-                    <Button>
-                        <AiOutlineShoppingCart size={28} />
-                    </Button>
+                    <Nav.Link as={Link} to="/cart">
+                        <AiOutlineShoppingCart size={28} color="white" />
+                    </Nav.Link>
                     {!isAthenticated ?
                         (<Nav.Link as={Link} to="/login">
                             <AiOutlineUser size={28} color="white" />
