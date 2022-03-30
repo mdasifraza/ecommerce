@@ -30,11 +30,11 @@ const Home = () => {
 
     return (
         <>
+            <MetaData title="Ecommerce" />
             {loading ? (
                 <Loader />
             ) : (
                 <>
-                    <MetaData title="Ecommerce" />
                     <div className="banner">
                         <p>Welcome to Ecommerce</p>
                         <h1>Find Amazing Products Below</h1>

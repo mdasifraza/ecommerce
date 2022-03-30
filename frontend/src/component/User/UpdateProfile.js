@@ -72,9 +72,9 @@ const UpdateProfile = () => {
 
     return (
         <>
+            <MetaData title="Update Profile" />
             {loading ? <Loader /> :
                 <>
-                    <MetaData title="Update Profile" />
                     <div className="updateProfileContainer">
                         <div className="updateProfileBox">
                             <h2 className="updateProfileHeading">Update Profile</h2>

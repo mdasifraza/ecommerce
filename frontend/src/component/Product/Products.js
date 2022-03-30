@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../../actions/productAction";
 import Loader from "../Layout/Loader/Loader";
 import ProductCard from "../Home/ProductCard";
+import MetaData from "../Layout/MetaData";
 
 const Products = ({ match }) => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Products = ({ match }) => {
 
     return (
         <>
+            <MetaData title="Products" />
             {loading ? <Loader /> :
                 <>
                     <h2 className="productsHeading">Products</h2>
@@ -27,7 +29,8 @@ const Products = ({ match }) => {
                         {products &&
                             products.map((product) => <ProductCard key={product._id} product={product} />)}
                     </div>
-                </>}
+                </>
+            }
         </>
     )
 }

@@ -48,9 +48,9 @@ const UpdatePassword = () => {
 
     return (
         <>
+            <MetaData title="Change Password" />
             {loading ? <Loader /> :
                 <>
-                    <MetaData title="Change Password" />
                     <div className="updatePasswordContainer">
                         <div className="updatePasswordBox">
                             <h2 className="updatePasswordHeading">Update Password</h2>

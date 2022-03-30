@@ -13,10 +13,10 @@ const ResetPassword = ({ match }) => {
     const dispatch = useDispatch();
     const alert = useAlert();
     const history = useNavigate();
-    
+
     // const { user } = useSelector(state => state.user);
     const { loading, error, success } = useSelector(state => state.forgotPassword);
-    
+
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const { token } = useParams();
@@ -46,9 +46,9 @@ const ResetPassword = ({ match }) => {
 
     return (
         <>
+            <MetaData title="Reset Password" />
             {loading ? <Loader /> :
                 <>
-                    <MetaData title="Reset Password" />
                     <div className="resetPasswordContainer">
                         <div className="resetPasswordBox">
                             <h2 className="resetPasswordHeading">Reset Password</h2>
