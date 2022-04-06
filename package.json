@@ -22,6 +22,7 @@
     "mongoose": "^6.1.5",
     "nodemailer": "^6.7.2",
     "nodemodule": "^0.3.0",
+    "stripe": "^8.215.0",
     "validator": "^13.7.0"
   }
 }

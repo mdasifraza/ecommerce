@@ -9,7 +9,7 @@ import Products from './component/Product/Products.js';
 import LoginSignUp from './component/User/LoginSignUp';
 // import Search from './component/Product/Search.js';
 import store from './store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadUser } from './actions/userAction';
 // import UserOptions from './component/Layout/Header/UserOptions.js';
 // import { useSelector } from 'react-redux';
@@ -20,13 +20,25 @@ import UpdatePassword from './component/User/UpdatePassword.js';
 import ForgotPassword from './component/User/ForgotPassword.js';
 import ResetPassword from './component/User/ResetPassword.js';
 import Cart from './component/Cart/Cart.js';
-import Shipping from './component/Cart/Shipping.js'; 
+import Shipping from './component/Cart/Shipping.js';
+import ConfirmOrder from './component/Cart/ConfirmOrder.js';
+import Payment from './component/Cart/Payment.js';
+import axios from 'axios';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
   // const { isAthenticated, user } = useSelector(state => state.user);
+  const [stripeApiKey, setStripeApiKey] = useState()
+
+  const getStripeApiKey = async () => {
+    const { data } = await axios.get(`/api/v1/stripeapikey`);
+    setStripeApiKey(data.stripeApiKey);
+  }
 
   useEffect(() => {
     store.dispatch(loadUser());
+    getStripeApiKey();
   }, [])
 
   return (
@@ -47,6 +59,10 @@ function App() {
         <Route exact="true" path="/login" element={<LoginSignUp />} />
         <Route exact="true" path="/cart" element={<Cart />} />
         <Route exact="true" path="/shipping" element={<ProtectedRoute Component={Shipping} />} />
+        <Route exact="true" path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
+        {/* <Elements stripe={loadStripe(stripeApiKey)}> */}
+          <Route exact="true" path="/process/payment" element={<ProtectedRoute Component={Payment} />} />
+        {/* </Elements> */}
       </Routes>
       <Footer />
     </Router>
