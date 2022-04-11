@@ -44,25 +44,50 @@ function App() {
   return (
     <Router>
       <Header />
-      {/* {isAthenticated && <UserOptions user={user} />} */}
       <Routes>
         <Route exact="true" path="/" element={<Home />} />
         <Route exact="true" path="/product/:id" element={<ProductDetails />} />
         <Route exact="true" path="/products" element={<Products />} />
         {/* <Route path="/products/:keyword" element={<Products />} />
         <Route exact="true" path="/search" element={<Search />} /> */}
-        <Route exact="true" path="/profile" element={<ProtectedRoute Component={Profile} />} />
-        <Route exact="true" path="/me/update" element={<ProtectedRoute Component={UpdateProfile} />} />
-        <Route exact="true" path="/password/update" element={<ProtectedRoute Component={UpdatePassword} />} />
         <Route exact="true" path="/password/forgot" element={<ForgotPassword />} />
         <Route exact="true" path="/password/reset/:token" element={<ResetPassword />} />
         <Route exact="true" path="/login" element={<LoginSignUp />} />
         <Route exact="true" path="/cart" element={<Cart />} />
-        <Route exact="true" path="/shipping" element={<ProtectedRoute Component={Shipping} />} />
-        <Route exact="true" path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
-        {/* <Elements stripe={loadStripe(stripeApiKey)}> */}
-          <Route exact="true" path="/process/payment" element={<ProtectedRoute Component={Payment} />} />
-        {/* </Elements> */}
+
+        <Route exact="true" path="/profile" element=
+          {<ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/me/update" element=
+          {<ProtectedRoute>
+            <UpdateProfile />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/password/update" element=
+          {<ProtectedRoute>
+            <UpdatePassword />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/shipping" element=
+          {<ProtectedRoute>
+            <Shipping />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/order/confirm" element=
+          {<ProtectedRoute>
+            <ConfirmOrder />
+          </ProtectedRoute>}
+        />
+        < Route exact="true" path="/process/payment"
+          element={
+            <ProtectedRoute>
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <Payment />
+              </Elements>
+            </ProtectedRoute>}
+        />
       </Routes>
       <Footer />
     </Router>
