@@ -11,7 +11,7 @@ const dotenv = require('dotenv');
 
 const app = express();
 
-dotenv.config({ path: "backend/config/config.env" });
+dotenv.config({ path: "backend/config/.env" });
 
 app.use(express.json());
 app.use(cookieParser());

@@ -25,6 +25,7 @@ const Payment = () => {
 
     const { shippingInfo, cartItems } = useSelector((state) => state.cart);
     const { user } = useSelector((state) => state.user);
+    const { error } = useSelector((state) => state.newOrder);
     const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
 
     const payBtn = useRef(null);
@@ -36,6 +37,15 @@ const Payment = () => {
     const paymentData = {
         amount: Math.round(orderInfo.totalPrice * 100)
     }
+
+    const order = {
+        shippingInfo,
+        orderItems: cartItems,
+        itemsPrice: orderInfo.subtotal,
+        taxPrice: orderInfo.tax,
+        shippingPrice: orderInfo.shippingCharges,
+        totalPrice: orderInfo.totalPrice,
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -54,21 +64,21 @@ const Payment = () => {
 
             const result = await stripe.confirmCardPayment(client_secret,
                 {
-                payment_method: {
-                    card: elements.getElement(CardNumberElement),
-                    billing_details: {
-                        name: user.name,
-                        email: user.email,
-                        address: {
-                            line1: shippingInfo.address,
-                            city: shippingInfo.city,
-                            state: shippingInfo.state,
-                            postal_code: shippingInfo.pinCode,
-                            country: shippingInfo.country,
+                    payment_method: {
+                        card: elements.getElement(CardNumberElement),
+                        billing_details: {
+                            name: user.name,
+                            email: user.email,
+                            address: {
+                                line1: shippingInfo.address,
+                                city: shippingInfo.city,
+                                state: shippingInfo.state,
+                                postal_code: shippingInfo.pinCode,
+                                country: shippingInfo.country,
+                            },
                         },
                     },
-                },
-            });
+                });
 
             if (result.error) {
                 payBtn.current.disabled = false;
@@ -76,6 +86,12 @@ const Payment = () => {
             }
             else {
                 if (result.paymentIntent.status === "succeeded") {
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status,
+                    };
+                    dispatch(createOrder(order));
+
                     history("/success");
                 }
                 else {
@@ -88,6 +104,13 @@ const Payment = () => {
             alert.error(error.response.data.message);
         }
     }
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error.response.data.message);
+            dispatch(clearErrors());
+        }
+    }, [alert, dispatch, error])
 
     return (
         <>

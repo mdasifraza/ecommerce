@@ -29,11 +29,12 @@ import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
   // const { isAthenticated, user } = useSelector(state => state.user);
-  const [stripeApiKey, setStripeApiKey] = useState()
+  const [stripeApiKey, setStripeApiKey] = useState(process.env.REACT_APP_STRIPE_API_KEY)
 
   const getStripeApiKey = async () => {
     const { data } = await axios.get(`/api/v1/stripeapikey`);
-    setStripeApiKey(data.stripeApiKey);
+    console.log({ key: process.env.REACT_APP_STRIPE_API_KEY });
+    setStripeApiKey(data.stripeKey);
   }
 
   useEffect(() => {
