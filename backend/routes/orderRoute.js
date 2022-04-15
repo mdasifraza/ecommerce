@@ -5,7 +5,7 @@ const { newOrder, getSingleOrder, myOrders, getAllOrders, updateOrder, deleteOrd
 const router = express.Router();
 
 router.route('/order/new').post(isAusthenticatedUser, newOrder);
-router.route('/order/:id').get(isAusthenticatedUser, getSingleOrder);
+router.route('/orderdetail/:id').get(isAusthenticatedUser, getSingleOrder);
 router.route('/orders/me').get(isAusthenticatedUser, myOrders);
 router.route('/admin/orders').get(isAusthenticatedUser, authorizeRoles("admin"), getAllOrders);
 router.route('/admin/order/:id')

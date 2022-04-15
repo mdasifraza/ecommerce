@@ -23,9 +23,12 @@ import Cart from './component/Cart/Cart.js';
 import Shipping from './component/Cart/Shipping.js';
 import ConfirmOrder from './component/Cart/ConfirmOrder.js';
 import Payment from './component/Cart/Payment.js';
+import OrderSucess from './component/Cart/OrderSucess.js';
 import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import MyOrders from './component/Order/MyOrders.js';
+import OrderDetails from './component/Order/OrderDetails.js';
 
 function App() {
   // const { isAthenticated, user } = useSelector(state => state.user);
@@ -33,7 +36,6 @@ function App() {
 
   const getStripeApiKey = async () => {
     const { data } = await axios.get(`/api/v1/stripeapikey`);
-    console.log({ key: process.env.REACT_APP_STRIPE_API_KEY });
     setStripeApiKey(data.stripeKey);
   }
 
@@ -88,6 +90,21 @@ function App() {
                 <Payment />
               </Elements>
             </ProtectedRoute>}
+        />
+        <Route exact="true" path="/success" element=
+          {<ProtectedRoute>
+            <OrderSucess />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/orders" element=
+          {<ProtectedRoute>
+            <MyOrders />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/orderdetail/:id" element=
+          {<ProtectedRoute>
+            <OrderDetails />
+          </ProtectedRoute>}
         />
       </Routes>
       <Footer />
