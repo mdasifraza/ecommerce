@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./UserOptions.css";
+import './UserOptions.css';
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PersonIcon from "@material-ui/icons/Person";
@@ -9,7 +9,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useAlert } from "react-alert";
+import { useAlert } from 'react-alert';
 import { logout } from '../../../actions/userAction';
 
 const UserOptions = ({ user }) => {
@@ -29,7 +29,7 @@ const UserOptions = ({ user }) => {
     };
 
     function dashboard() {
-        history("/dashboard")
+        history("/admin/dashboard")
     }
 
     function orders() {

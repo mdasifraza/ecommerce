@@ -17,11 +17,11 @@ const Profile = () => {
 
     return (
         <>
-            <MetaData title={`${user.name}'s Profile`} />
             {loading ? (
                 <Loader />
             ) : (
                 <>
+                    <MetaData title={`${user.name}'s Profile`} />
                     <div className="profileContainer">
                         <div>
                             <h1>My Profile</h1>

@@ -35,17 +35,20 @@ exports.createProductReview = catchAsyncError(async (req, res, next) => {
         comment,
     };
     const product = await Product.findById(productId);
-    const isReviewed = product.reviews.find(rev => rev.user.toString() === req.user._id.toString());
+
+    const isReviewed = product.reviews.find((rev) => rev.user.toString() === req.user._id.toString());
+
     if (isReviewed) {
-        product.reviews.forEach(rev => {
+        product.reviews.forEach((rev) => {
             if (rev.user.toString() === req.user._id.toString()) {
                 (rev.rating = rating), (rev.comment = comment);
             }
-        })
+        });
     } else {
         product.reviews.push(review);
         product.numberOfReviews = product.reviews.length;
     }
+
     let avg = 0;
     product.reviews.forEach(rev => {
         avg += rev.rating;
@@ -92,8 +95,8 @@ exports.deleteProductReviews = catchAsyncError(async (req, res, next) => {
     res.status(200).json({ success: true })
 });
 
-// only ADMIN can create, update and delete products
 
+// only ADMIN can create, update and delete products all the below functions
 exports.createProduct = catchAsyncError(async (req, res, next) => {
     req.body.user = req.user.id;
     const product = await Product.create(req.body);
@@ -122,4 +125,9 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
     await product.remove();
 
     res.status(200).json({ success: true, message: "Product Deleted Successfully" });
+});
+
+exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
+    const products = await Product.find();
+    res.status(200).json({ success: true, products });
 });

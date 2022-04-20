@@ -27,11 +27,11 @@ const OrderDetails = () => {
 
     return (
         <>
+            <MetaData title="Order Details" />
             {loading ? (
                 <Loader />
             ) : (
                 <>
-                    <MetaData title="Order Details" />
                     <div className="orderDetailsPage">
                         <div className="orderDetailsContainer">
                             <Typography component="h1">

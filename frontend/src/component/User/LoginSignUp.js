@@ -97,8 +97,8 @@ const LoginSignUp = () => {
 
     return (
         <>
-            {loading ? <Loader /> :
-                <>
+            {loading ? (<Loader />) :
+                (<>
                     <div className="LoginSignUpContainer">
                         <div className="LoginSignUpBox">
                             <div className="login_signUp_toggle">
@@ -176,7 +176,8 @@ const LoginSignUp = () => {
                             <input type="submit" value="Register" className="signUpBtn" />
                         </form>
                     </div>
-                </>}
+                </>)
+            }
         </>
     )
 }

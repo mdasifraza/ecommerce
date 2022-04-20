@@ -29,6 +29,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import MyOrders from './component/Order/MyOrders.js';
 import OrderDetails from './component/Order/OrderDetails.js';
+import AdminDashboard from './component/Admin/AdminDashboard.js';
+import ProductList from './component/Admin/ProductList.js';
 
 function App() {
   // const { isAthenticated, user } = useSelector(state => state.user);
@@ -104,6 +106,16 @@ function App() {
         <Route exact="true" path="/orderdetail/:id" element=
           {<ProtectedRoute>
             <OrderDetails />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/admin/dashboard" element=
+          {<ProtectedRoute isAdmin={true}>
+            <AdminDashboard />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/admin/products" element=
+          {<ProtectedRoute isAdmin={true}>
+            <ProductList />
           </ProtectedRoute>}
         />
       </Routes>
