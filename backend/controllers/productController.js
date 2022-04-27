@@ -2,6 +2,7 @@ const Product = require('../models/productModel');
 const ErrorHandler = require('../utils/errorhandler');
 const catchAsyncError = require('../middleware/catchAsyncError');
 const ApiFeatures = require('../utils/apifeatures');
+const cloudinary = require('cloudinary');
 
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
     // return next (new ErrorHandler("this is temp check error",500));
@@ -98,7 +99,29 @@ exports.deleteProductReviews = catchAsyncError(async (req, res, next) => {
 
 // only ADMIN can create, update and delete products all the below functions
 exports.createProduct = catchAsyncError(async (req, res, next) => {
+    let images = [];
+
+    if (typeof (req.body.images) === "string") {
+        images.push(req.body.images);
+    }
+    else {
+        images = req.body.images;
+    }
+
+    const imagesLink = [];
+    for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "products",
+        });
+        imagesLink.push({
+            public_id: result.public_id,
+            url: result.secure_url,
+        })
+    }
+
+    req.body.images = imagesLink;
     req.body.user = req.user.id;
+
     const product = await Product.create(req.body);
     res.status(201).json({ success: true, product });
 });
