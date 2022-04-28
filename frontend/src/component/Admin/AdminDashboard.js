@@ -17,7 +17,7 @@ import {
     Legend,
 } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAlert } from 'react-alert';
+// import { useAlert } from 'react-alert';
 import { getAdminProduct } from '../../actions/productAction';
 
 ChartJS.register(
@@ -34,7 +34,7 @@ ChartJS.register(
 const DashBoard = () => {
 
     const dispatch = useDispatch();
-    const alert = useAlert();
+    // const alert = useAlert();
 
     const { products } = useSelector(state => state.products);
 
