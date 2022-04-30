@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 // import { useAlert } from 'react-alert';
 import { getAdminProduct } from '../../actions/productAction';
+import { getAllOrders } from '../../actions/orderAction';
 
 ChartJS.register(
     CategoryScale,
@@ -37,11 +38,13 @@ const DashBoard = () => {
     // const alert = useAlert();
 
     const { products } = useSelector(state => state.products);
+    const { orders } = useSelector(state => state.allOrders);
 
     let outOfStock = 0;
 
     useEffect(() => {
         dispatch(getAdminProduct());
+        dispatch(getAllOrders());
     }, [dispatch])
 
     products &&
@@ -89,7 +92,7 @@ const DashBoard = () => {
                             </Link>
                             <Link to="/admin/orders">
                                 <p>Orders</p>
-                                <p>4</p>
+                                <p>{orders && orders.length}</p>
                             </Link>
                             <Link to="/admin/users">
                                 <p>Users</p>
