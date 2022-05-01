@@ -32,20 +32,26 @@ ChartJS.register(
     Legend,
 );
 
-const DashBoard = () => {
+const AdminDashBoard = () => {
 
     const dispatch = useDispatch();
     // const alert = useAlert();
 
     const { products } = useSelector(state => state.products);
     const { orders } = useSelector(state => state.allOrders);
+    const { users } = useSelector((state) => state.allUsers);
 
     let outOfStock = 0;
 
     useEffect(() => {
         dispatch(getAdminProduct());
         dispatch(getAllOrders());
-    }, [dispatch])
+    }, [dispatch]);
+
+    let totalAmout = 0;
+    orders && orders.forEach(order =>{
+        totalAmout += order.totalPrice;
+    });
 
     products &&
         products.forEach((item) => {
@@ -60,7 +66,7 @@ const DashBoard = () => {
             label: "TOTAL AMOUNT",
             backgroundColor: ["tomato"],
             hoverBackgroundColor: ["rgb(120, 18, 0)"],
-            data: [0, 4000],
+            data: [0, totalAmout],
         }]
     }
 
@@ -83,7 +89,7 @@ const DashBoard = () => {
 
                     <div className="dashboardSummary">
                         <div>
-                            <p>Total Amount <br /> ₹20000</p>
+                            <p>Total Amount <br /> ₹{totalAmout}</p>
                         </div>
                         <div className="dashboardSummaryBox2">
                             <Link to="/admin/products">
@@ -96,7 +102,7 @@ const DashBoard = () => {
                             </Link>
                             <Link to="/admin/users">
                                 <p>Users</p>
-                                <p>2</p>
+                                <p>{users && users.length}</p>
                             </Link>
                         </div>
                     </div>
@@ -117,4 +123,4 @@ const DashBoard = () => {
     )
 }
 
-export default DashBoard
+export default AdminDashBoard

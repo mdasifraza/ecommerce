@@ -6,6 +6,24 @@ const cloudinary = require('cloudinary');
 
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
     // return next (new ErrorHandler("this is temp check error",500));
+    // const resultPerPage = 8;
+    // const productsCount = await Product.countDocuments();
+    // console.log(req.query)
+    // const apiFeature = new ApiFeatures(Product.find().exec(), req.query)
+    //     .search()
+    //     .filter();
+    // // .pagination(resultPerPage);
+
+    // const products = await apiFeature.query;
+
+    // let filteredProductsCount = products.length;
+
+    // apiFeature.pagination(resultPerPage);
+
+    // products = await apiFeature.query;
+    // res.status(200).json({ success: true, products, productsCount, productsCount, resultPerPage, filteredProductsCount, });
+
+    //working code
     const resultPerPage = 8;
     const productsCount = await Product.countDocuments();
     const apiFeature = new ApiFeatures(Product.find(), req.query)
@@ -15,6 +33,7 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
     // const products = await Product.find();
     const products = await apiFeature.query;
     res.status(200).json({ success: true, products, productsCount, });
+
 });
 
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
@@ -61,11 +80,12 @@ exports.createProductReview = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getProductReviews = catchAsyncError(async (req, res, next) => {
+
     const product = await Product.findById(req.query.productId);
     if (!product) {
         return next(new ErrorHandler("Product Not Found", 404));
     }
-    res.status(200).json({ success: true, review: product.reviews })
+    res.status(200).json({ success: true, reviews: product.reviews })
 });
 
 exports.deleteProductReviews = catchAsyncError(async (req, res, next) => {
@@ -73,13 +93,21 @@ exports.deleteProductReviews = catchAsyncError(async (req, res, next) => {
     if (!product) {
         return next(new ErrorHandler("Product Not Found", 404));
     }
+
     const reviews = product.reviews.filter(rev => rev._id.toString() !== req.query.reviewId.toString());
+
     let avg = 0;
     reviews.forEach(rev => {
         avg += rev.rating;
-    })
-    const ratings = avg / reviews.length;
-    const numberOfReviews = reviews.length;
+    });
+
+    let ratings = 0;
+    let numberOfReviews = 0;
+    if (reviews.length !== 0) {
+        ratings = avg / reviews.length;
+        numberOfReviews = reviews.length;
+    }
+
     await Product.findByIdAndUpdate(
         req.query.productId,
         {

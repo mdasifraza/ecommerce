@@ -36,6 +36,11 @@ import UpdateProduct from './component/Admin/UpdateProduct.js';
 import OrderList from './component/Admin/OrderList.js';
 import ProcessOrder from './component/Admin/ProcessOrder.js';
 import UsersList from './component/Admin/UsersList.js';
+import UpdateUser from './component/Admin/UpdateUser.js';
+import ProductReviews from './component/Admin/ProductReviews.js';
+import Contact from "./component/Layout/Contact/Contact.js";
+import PageNotFound from "./component/Layout/Contact/PageNotFound.js";
+import About from "./component/Layout/About/About.js";
 
 function App() {
   // const { isAthenticated, user } = useSelector(state => state.user);
@@ -64,6 +69,9 @@ function App() {
         <Route exact="true" path="/password/reset/:token" element={<ResetPassword />} />
         <Route exact="true" path="/login" element={<LoginSignUp />} />
         <Route exact="true" path="/cart" element={<Cart />} />
+        <Route exact="true" path="/contact" element={<Contact />} />
+        <Route exact="true" path="/about" element={<About />} />
+        <Route exact="true" path="/*" element={<PageNotFound />} />
 
         <Route exact="true" path="/profile" element=
           {<ProtectedRoute>
@@ -146,6 +154,16 @@ function App() {
         <Route exact="true" path="/admin/users" element=
           {<ProtectedRoute isAdmin={true}>
             <UsersList />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/admin/user/:id" element=
+          {<ProtectedRoute isAdmin={true}>
+            <UpdateUser />
+          </ProtectedRoute>}
+        />
+        <Route exact="true" path="/admin/reviews" element=
+          {<ProtectedRoute isAdmin={true}>
+            <ProductReviews />
           </ProtectedRoute>}
         />
       </Routes>

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './payment.css';
+import React, { useEffect, useRef } from 'react';
+import './Payment.css';
 import CheckoutSteps from '../Cart/CheckoutSteps.js';
 import { useSelector, useDispatch } from 'react-redux';
 import MetaData from '../Layout/MetaData.js';
@@ -18,6 +18,7 @@ import EventIcon from '@material-ui/icons/Event';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { createOrder, clearErrors } from '../../actions/orderAction.js';
 import { useNavigate } from 'react-router-dom';
+import { removeItemsFromCart } from '../../actions/cartAction';
 
 
 const Payment = () => {
@@ -91,7 +92,9 @@ const Payment = () => {
                         status: result.paymentIntent.status,
                     };
                     dispatch(createOrder(order));
-
+                    cartItems.forEach(item => {
+                        dispatch(removeItemsFromCart(item.product))
+                    });
                     history("/success");
                 }
                 else {

@@ -126,13 +126,16 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
     }
     if (req.body.avatar !== "" && req.body.avatar !== undefined) {
         const user = await User.findById(req.user.id);
+
         const imageId = user.avatar.public_id;
         await cloudinary.v2.uploader.destroy(imageId);
+
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: "avatars",
             width: 150,
             crop: "scale"
         });
+
         newUserData.avatar = {
             public_id: myCloud.public_id,
             url: myCloud.secure_url
@@ -140,6 +143,7 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
     }
 
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, { new: true, runValidators: true, useFindAndModify: false });
+
     res.status(200).json({ success: true, user });
 });
 
@@ -165,16 +169,30 @@ exports.updateUserRoleForAdmin = catchAsyncError(async (req, res, next) => {
         email: req.body.email,
         role: req.body.role
     }
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, { new: true, runValidators: true, useFindAndModify: false });
+
+    let user = await User.findById(req.params.id);
+
+    if (!user) {
+        return next(new ErrorHandler(`User does not exist with id ${req.params.id}`));
+    }
+
+    user = await User.findByIdAndUpdate(req.params.id, newUserData, { new: true, runValidators: true, useFindAndModify: false });
+
     res.status(200).json({ success: true, user });
 });
 
 //delete user for admin
 exports.deleteUserForAdmin = catchAsyncError(async (req, res, next) => {
     const user = await User.findById(req.params.id);
+
     if (!user) {
         return next(new ErrorHandler(`user does not exist for this ${req.params.id}`));
     }
+
+    const imageId = user.avatar.public_id;
+    await cloudinary.v2.uploader.destroy(imageId);
+
     await user.remove();
+
     res.status(200).json({ success: true, message: "user deleted successfully" });
 })

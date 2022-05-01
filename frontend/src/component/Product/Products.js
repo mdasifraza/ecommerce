@@ -1,23 +1,34 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Products.css';
-import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "../../actions/productAction";
-import Loader from "../Layout/Loader/Loader";
-import ProductCard from "../Home/ProductCard";
-import MetaData from "../Layout/MetaData";
+import { useSelector, useDispatch } from 'react-redux';
+import { getProduct } from '../../actions/productAction';
+import Loader from '../Layout/Loader/Loader';
+import ProductCard from '../Home/ProductCard';
+import Pagination from 'react-js-pagination';
+import MetaData from '../Layout/MetaData';
+import { useParams } from 'react-router-dom';
 
-const Products = ({ match }) => {
+const Products = () => {
     const dispatch = useDispatch();
-    const { products, loading } = useSelector((state) => state.products);
 
-    // const keyword = match.params.keyword;
+    const { keyword } = useParams();
 
-    // useEffect(() => {
-    //     dispatch(getProduct(keyword));
-    // }, [dispatch, keyword]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const { products, loading, productsCount,
+        resultPerPage, filteredProductsCount, } = useSelector((state) => state.products);
+
+    const setCurrentPageNo = (e) => {
+        setCurrentPage(e);
+    };
+
+    let count = filteredProductsCount;
+    // let count = productsCount;
+    console.log({ count, resultPerPage })
+
     useEffect(() => {
-        dispatch(getProduct());
-    }, [dispatch]);
+        dispatch(getProduct(keyword, currentPage));
+    }, [currentPage, dispatch, keyword]);
 
     return (
         <>
@@ -29,6 +40,24 @@ const Products = ({ match }) => {
                         {products &&
                             products.map((product) => <ProductCard key={product._id} product={product} />)}
                     </div>
+                    {resultPerPage < count && (
+                            <div className="paginationBox">
+                                <Pagination
+                                    activePage={currentPage}
+                                    itemsCountPerPage={resultPerPage}
+                                    totalItemsCount={productsCount}
+                                    onChange={setCurrentPageNo}
+                                    nextPageText="Next"
+                                    prevPageText="Prev"
+                                    firstPageText="1st"
+                                    lastPageText="Last"
+                                    itemClass="page-item"
+                                    linkClass="page-link"
+                                    activeClass="pageItemActive"
+                                    activeLinkClass="pageLinkActive"
+                                />
+                            </div>
+                        )}
                 </>
             }
         </>
