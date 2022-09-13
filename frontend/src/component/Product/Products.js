@@ -21,9 +21,9 @@ const Products = () => {
     const setCurrentPageNo = (e) => {
         setCurrentPage(e);
     };
-
-    let count = filteredProductsCount;
+    
     // let count = productsCount;
+    let count = filteredProductsCount;
     console.log({ count, resultPerPage })
 
     useEffect(() => {
@@ -41,23 +41,23 @@ const Products = () => {
                             products.map((product) => <ProductCard key={product._id} product={product} />)}
                     </div>
                     {resultPerPage < count && (
-                            <div className="paginationBox">
-                                <Pagination
-                                    activePage={currentPage}
-                                    itemsCountPerPage={resultPerPage}
-                                    totalItemsCount={productsCount}
-                                    onChange={setCurrentPageNo}
-                                    nextPageText="Next"
-                                    prevPageText="Prev"
-                                    firstPageText="1st"
-                                    lastPageText="Last"
-                                    itemClass="page-item"
-                                    linkClass="page-link"
-                                    activeClass="pageItemActive"
-                                    activeLinkClass="pageLinkActive"
-                                />
-                            </div>
-                        )}
+                        <div className="paginationBox">
+                            <Pagination
+                                activePage={currentPage}
+                                itemsCountPerPage={resultPerPage}
+                                totalItemsCount={productsCount}
+                                onChange={setCurrentPageNo}
+                                nextPageText="Next"
+                                prevPageText="Prev"
+                                firstPageText="1st"
+                                lastPageText="Last"
+                                itemClass="page-item"
+                                linkClass="page-link"
+                                activeClass="pageItemActive"
+                                activeLinkClass="pageLinkActive"
+                            />
+                        </div>
+                    )}
                 </>
             }
         </>

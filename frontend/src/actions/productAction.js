@@ -29,6 +29,7 @@ import {
     DELETE_REVIEW_FAIL,
     CLEAR_ERRORS
 } from '../constants/productConstant';
+import {API_URL} from '../config/index';
 
 // export const getProduct = (keyword = "") => async (dispatch) => {
 export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], category, ratings = 0) => async (dispatch) => {
@@ -41,7 +42,6 @@ export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], ca
         // if (category) {
         //     link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
         // }
-
 
         const { data } = await axios.get(link);
         dispatch({

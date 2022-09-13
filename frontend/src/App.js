@@ -7,7 +7,7 @@ import Home from './component/Home/Home.js';
 import ProductDetails from './component/Product/ProductDetails.js';
 import Products from './component/Product/Products.js';
 import LoginSignUp from './component/User/LoginSignUp';
-// import Search from './component/Product/Search.js';
+import Search from './component/Product/Search.js';
 import store from './store';
 import { useEffect, useState } from 'react';
 import { loadUser } from './actions/userAction';
@@ -63,8 +63,8 @@ function App() {
         <Route exact="true" path="/" element={<Home />} />
         <Route exact="true" path="/product/:id" element={<ProductDetails />} />
         <Route exact="true" path="/products" element={<Products />} />
-        {/* <Route path="/products/:keyword" element={<Products />} />
-        <Route exact="true" path="/search" element={<Search />} /> */}
+        <Route path="/products/:keyword" element={<Products />} />
+        <Route exact="true" path="/search" element={<Search />} />
         <Route exact="true" path="/password/forgot" element={<ForgotPassword />} />
         <Route exact="true" path="/password/reset/:token" element={<ResetPassword />} />
         <Route exact="true" path="/login" element={<LoginSignUp />} />
