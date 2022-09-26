@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ProductDetails.css';
-import Carousel from 'react-material-ui-carousel';
+// import Carousel from 'react-material-ui-carousel';
+import Carousel from 'react-bootstrap/Carousel';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductDetails, newReview, clearErrors } from '../../actions/productAction';
 import { useParams } from 'react-router-dom';
@@ -101,7 +102,7 @@ const ProductDetails = () => {
         <>
           <div className="ProductDetails">
             <div>
-              <Carousel>
+              {/* <Carousel>
                 {product.images && product.images.map((item, i) => (
                   <img
                     className="CarouselImage"
@@ -109,6 +110,19 @@ const ProductDetails = () => {
                     src={item.url}
                     alt={`${i} Slide`}
                   />
+                ))}
+              </Carousel> */}
+
+              <Carousel>
+                {product.images && product.images.map((item, i) => (
+                  <Carousel.Item>
+                    <img
+                      className="CarouselImage"
+                      key={item.url}
+                      src={item.url}
+                      alt={`${i} Slide`}
+                    />
+                  </Carousel.Item>
                 ))}
               </Carousel>
             </div>

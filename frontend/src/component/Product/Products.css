@@ -14,6 +14,7 @@
     padding: 0 5vmax;
     justify-content: center;
     min-height: 30vh;
+    margin-left: 5vmax;
 }
 
 .paginationBox {
@@ -92,9 +93,9 @@
     color: tomato;
 }
 
-.filterBox>fieldset {
+/* .filterBox>fieldset {
     border: 1px solid rgba(0, 0, 0, 0.329);
-}
+} */
 
 @media screen and (max-width: 600px) {
     .filterBox {
