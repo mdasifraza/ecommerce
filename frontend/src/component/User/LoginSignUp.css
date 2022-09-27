@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(231, 231, 231);
-    /* position: fixed; */
+    position: fixed;
     top: 0%;
     left: 0;
 }
@@ -59,7 +59,7 @@
 }
 
 .signUpForm {
-    /* transform: translateY(-100%) translateX(-100vmax); */
+    transform: translateY(-100%) translateX(-100vmax);
 }
 
 .loginForm>div,

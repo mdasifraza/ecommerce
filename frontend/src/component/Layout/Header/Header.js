@@ -4,6 +4,7 @@ import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser } from 'react-ico
 import { Link } from 'react-router-dom';
 import UserOptions from './UserOptions';
 import { useSelector } from 'react-redux';
+import Search from '../../Product/Search';
 
 
 const Header = () => {
@@ -40,9 +41,10 @@ const Header = () => {
                         <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
                     </Nav>
-                    <Nav.Link as={Link} to="/search">
+                    {/* <Nav.Link as={Link} to="/search">
                         <AiOutlineSearch size={28} color="white" />
-                    </Nav.Link>
+                    </Nav.Link> */}
+                    <Search />
                     <Nav.Link as={Link} to="/cart">
                         <AiOutlineShoppingCart size={28} color="white" />
                         {<Badge bg="primary">{numberOfItems !== 0 ? numberOfItems : null}</Badge>}
