@@ -19,6 +19,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { createOrder, clearErrors } from '../../actions/orderAction.js';
 import { useNavigate } from 'react-router-dom';
 import { removeItemsFromCart } from '../../actions/cartAction';
+import { baseUrl } from '../../config';
 
 
 const Payment = () => {
@@ -58,7 +59,8 @@ const Payment = () => {
                     "Content-Type": "application/json",
                 }
             };
-            const { data } = await axios.post(`/api/v1/payment/process`, paymentData, config);
+            const { data } = await axios.post(`${baseUrl}api/v1/payment/process`, paymentData, config);
+            // const { data } = await axios.post(`/api/v1/payment/process`, paymentData, config);
 
             const client_secret = data.client_secret;
             if (!stripe || !elements) return;
