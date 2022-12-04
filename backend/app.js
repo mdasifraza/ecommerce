@@ -7,6 +7,7 @@ const errorMiddleware = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileupload = require('express-fileupload');
+var cors = require('cors');
 // const dotenv = require('dotenv');
 const path = require('path');
 
@@ -18,6 +19,22 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 }
 
 // dotenv.config({ path: "backend/config/.env" });
+const corsOpts = {
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+      'PUT',
+      'DELETE',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
+  
+app.use(cors(corsOpts));
 
 app.use(express.json());
 app.use(cookieParser());

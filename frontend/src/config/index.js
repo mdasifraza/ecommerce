@@ -1,4 +1,5 @@
-export const baseUrl = "https://ecommerce-backend-apis.onrender.com/"
+export const baseUrl = "http://localhost:4000/"
+// export const baseUrl = "https://ecommerce-backend-apis.onrender.com/"
 
 export const API_URL = {
     PRODUCTS: {
