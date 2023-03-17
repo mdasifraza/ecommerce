@@ -24,7 +24,7 @@ const About = () => {
                     </div>
                     <div className="aboutSectionContainer2">
                         <Typography component="h2">Full Stack Developer</Typography>
-                        <Typography component="h3">Thnaks for exploring my project</Typography>
+                        <Typography component="h3">Thanks for exploring my project</Typography>
                         <Typography component="h3">All kind of suggestions are welcome to improve this site</Typography>
                     </div>
                 </div>

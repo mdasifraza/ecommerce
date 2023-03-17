@@ -33,12 +33,14 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
 
   const increasequantity = () => {
+    console.log("increasequantity")
     if (product.stock <= quantity) return;
     let qty = quantity + 1;
     setQuantity(qty);
   }
 
   const decreasequantity = () => {
+    console.log("decreasequantity")
     if (quantity <= 1) return;
     let qty = quantity - 1;
     setQuantity(qty);
@@ -115,7 +117,7 @@ const ProductDetails = () => {
 
               <Carousel>
                 {product.images && product.images.map((item, i) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={item.url}>
                     <img
                       className="CarouselImage"
                       key={item.url}
@@ -143,7 +145,8 @@ const ProductDetails = () => {
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreasequantity}>-</button>
-                    <input readOnly type="number" value={quantity} />
+                    <span>{quantity}</span>
+                    {/* <input readOnly type="number" value={quantity} /> */}
                     <button onClick={increasequantity}>+</button>
                   </div>
                   <button disabled={product.stock < 1 ? true : false} onClick={addToCartHandler}>
@@ -151,8 +154,8 @@ const ProductDetails = () => {
                   </button>
                 </div>
                 <p>
-                  Status: <b className={product.Stock < 1 ? "redColor" : "greenColor"} >
-                    {product.Stock < 1 ? "OutOfStock" : "InStock"}
+                  Status: <b className={product.stock < 1 ? "redColor" : "greenColor"} >
+                    {product.stock < 1 ? "OutOfStock" : "InStock"}
                   </b>
                 </p>
               </div>
