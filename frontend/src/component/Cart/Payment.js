@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { removeItemsFromCart } from '../../actions/cartAction';
 import { baseUrl } from '../../config';
 
+const authToken = sessionStorage.getItem("token")
 
 const Payment = () => {
     const history = useNavigate();
@@ -52,14 +53,12 @@ const Payment = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         payBtn.current.disabled = true;
-
         try {
             const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                }
+                headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
+                withCredentials: true
             };
-            const { data } = await axios.post(`${baseUrl}api/v1/payment/process`, paymentData, config);
+            const { data } = await axios.post(`${baseUrl}/api/v1/payment/process`, paymentData, config);
             // const { data } = await axios.post(`/api/v1/payment/process`, paymentData, config);
 
             const client_secret = data.client_secret;

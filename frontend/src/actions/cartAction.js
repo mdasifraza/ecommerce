@@ -6,10 +6,12 @@ import {
 import axios from 'axios';
 import { baseUrl } from '../config';
 
+const authToken = sessionStorage.getItem("token")
+
 //ADD TO CART
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
     // const { data } = await axios.get(`/api/v1/products/${id}`);
-    const { data } = await axios.get(`${baseUrl}/api/v1/products/${id}`, {withCredentials: true});
+    const { data } = await axios.get(`${baseUrl}/api/v1/products/${id}`, { withCredentials: true });
     // console.log(data);
     dispatch({
         type: ADD_TO_CART,

@@ -22,13 +22,15 @@ import {
 import axios from 'axios';
 import { baseUrl } from '../config/index.js';
 
+const authToken = sessionStorage.getItem("token")
+
 export const createOrder = (order) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_ORDER_REQUEST });
-
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(authToken)}`,
       },
       withCredentials: true
     };
@@ -48,12 +50,12 @@ export const createOrder = (order) => async (dispatch) => {
 export const updateOrder = (id, order) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ORDER_REQUEST });
-
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(authToken)}`,
       },
-      withCredentials: true,
+      withCredentials: true
     };
 
     const { data } = await axios.put(`${baseUrl}/api/v1/admin/order/${id}`, order, config);
@@ -71,8 +73,15 @@ export const updateOrder = (id, order) => async (dispatch) => {
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(authToken)}`,
+      },
+      withCredentials: true
+    };
 
-    const { data } = await axios.delete(`${baseUrl}/api/v1/admin/order/${id}`, { withCredentials: true });
+    const { data } = await axios.delete(`${baseUrl}/api/v1/admin/order/${id}`, config);
 
     dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
   } catch (error) {
@@ -86,8 +95,15 @@ export const deleteOrder = (id) => async (dispatch) => {
 export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(authToken)}`,
+      },
+      withCredentials: true
+    };
 
-    const { data } = await axios.get(`${baseUrl}/api/v1/orders/me`, { withCredentials: true });
+    const { data } = await axios.get(`${baseUrl}/api/v1/orders/me`, config);
 
     dispatch({ type: MY_ORDERS_SUCCESS, payload: data.order });
   } catch (error) {
@@ -102,8 +118,15 @@ export const myOrders = () => async (dispatch) => {
 export const getAllOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(authToken)}`,
+      },
+      withCredentials: true
+    };
 
-    const { data } = await axios.get(`${baseUrl}/api/v1/admin/orders`, { withCredentials: true });
+    const { data } = await axios.get(`${baseUrl}/api/v1/admin/orders`, config);
 
     dispatch({ type: ALL_ORDERS_SUCCESS, payload: data.order });
   } catch (error) {
@@ -117,8 +140,14 @@ export const getAllOrders = () => async (dispatch) => {
 export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
-
-    const { data } = await axios.get(`${baseUrl}/api/v1/orderdetail/${id}`, { withCredentials: true });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(authToken)}`,
+      },
+      withCredentials: true
+    };
+    const { data } = await axios.get(`${baseUrl}/api/v1/orderdetail/${id}`, config);
 
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {

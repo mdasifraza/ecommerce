@@ -41,11 +41,11 @@ import ProductReviews from './component/Admin/ProductReviews.js';
 import Contact from "./component/Layout/Contact/Contact.js";
 import PageNotFound from "./component/Layout/Contact/PageNotFound.js";
 import About from "./component/Layout/About/About.js";
-import { baseUrl } from './config';
+import { baseUrl, stripeKey } from './config';
 
 function App() {
   // const { isAthenticated, user } = useSelector(state => state.user);
-  const [stripeApiKey, setStripeApiKey] = useState(process.env.REACT_APP_STRIPE_API_KEY)
+  const [stripeApiKey, setStripeApiKey] = useState(process.env.REACT_APP_STRIPE_API_KEY || stripeKey)
 
   const getStripeApiKey = async () => {
     const { data } = await axios.get(`${baseUrl}api/v1/stripeapikey`);

@@ -19,7 +19,10 @@ import {
     CLEAR_ERRORS
 } from '../constants/userContant';
 import axios from 'axios';
-import { baseUrl } from '../config';
+import { baseUrl, STORAGE } from '../config';
+import { useSelector } from 'react-redux';
+
+const authToken = sessionStorage.getItem("token")
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -29,11 +32,14 @@ export const login = (email, password) => async (dispatch) => {
             { email, password },
             config
         );
+        // console.log(data)
+        sessionStorage.setItem(STORAGE, JSON.stringify(data))
+        sessionStorage.setItem("token", JSON.stringify(data.token))
         // const { data } = await axios.post(`/api/v1/login`,
         //     { email, password },
         //     config
         // );
-        dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+        dispatch({ type: LOGIN_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
@@ -51,7 +57,9 @@ export const register = (userData) => async (dispatch) => {
         //     userData,
         //     config
         // );
-        dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
+        sessionStorage.setItem(STORAGE, JSON.stringify(data))
+        sessionStorage.setItem("token", JSON.stringify(data.token))
+        dispatch({ type: REGISTER_USER_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.message });
     }
@@ -61,8 +69,12 @@ export const register = (userData) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: LOAD_USER_REQUEST });
-        const { data } = await axios.get(`${baseUrl}/api/v1/me`, { withCredentials: true });
-        dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
+            withCredentials: true
+        };
+        const { data } = await axios.get(`${baseUrl}/api/v1/me`, config);
+        dispatch({ type: LOAD_USER_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
     }
@@ -82,7 +94,11 @@ export const logout = () => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_USERS_REQUEST });
-        const { data } = await axios.get(`${baseUrl}/api/v1/admin/users`, { withCredentials: true });
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
+            withCredentials: true
+        };
+        const { data } = await axios.get(`${baseUrl}/api/v1/admin/users`, config);
         dispatch({ type: ALL_USERS_SUCCESS, payload: data.users });
     } catch (error) {
         dispatch({ type: ALL_USERS_FAIL, payload: error.response.data.message });
@@ -93,7 +109,11 @@ export const getAllUsers = () => async (dispatch) => {
 export const getUserDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: USER_DETAILS_REQUEST });
-        const { data } = await axios.get(`${baseUrl}/api/v1/admin/user/${id}`, { withCredentials: true });
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
+            withCredentials: true
+        };
+        const { data } = await axios.get(`${baseUrl}/api/v1/admin/user/${id}`, config);
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data.user });
     } catch (error) {
         dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
