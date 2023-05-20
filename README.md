@@ -1,7 +1,7 @@
 # E-Commerce Site Readme
 
 This README file provides general information about my e-commerce site and explains its basic operations. It serves as a guide for developers and contributors to understand the project structure, functionality, and how to get started.
-[https://khareedoo.netlify.app/](#https://khareedoo.netlify.app/)
+[https://khareedoo.netlify.app/](https://khareedoo.netlify.app/)
 
 ## Table of Contents
 - [Introduction](#introduction)
