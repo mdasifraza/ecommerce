@@ -55,7 +55,7 @@ const Payment = () => {
         payBtn.current.disabled = true;
         try {
             const config = {
-                headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
+                headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'application/json' },
                 withCredentials: true
             };
             const { data } = await axios.post(`${baseUrl}/api/v1/payment/process`, paymentData, config);
