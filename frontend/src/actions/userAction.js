@@ -20,7 +20,6 @@ import {
 } from '../constants/userContant';
 import axios from 'axios';
 import { baseUrl, STORAGE } from '../config';
-import { useSelector } from 'react-redux';
 
 const authToken = sessionStorage.getItem("token")
 
