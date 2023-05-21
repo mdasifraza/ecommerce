@@ -20,7 +20,7 @@ import {
     CLEAR_ERRORS
 } from '../constants/profileConstant.js';
 import axios from 'axios';
-import { baseUrl } from '../config/index.js';
+import { API_BASE_URL } from '../config/index.js';
 
 const authToken = sessionStorage.getItem("token")
 
@@ -31,7 +31,7 @@ export const updateProfile = (userData) => async (dispatch) => {
             headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         };
-        const { data } = await axios.put(`${baseUrl}/api/v1/me/update`,
+        const { data } = await axios.put(`${API_BASE_URL}/api/v1/me/update`,
             userData,
             config
         );
@@ -48,7 +48,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
             headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         };
-        const { data } = await axios.put(`${baseUrl}/api/v1/password/update`,
+        const { data } = await axios.put(`${API_BASE_URL}/api/v1/password/update`,
             passwords,
             config
         );
@@ -65,7 +65,7 @@ export const forgotPassword = (email) => async (dispatch) => {
             headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         };
-        const { data } = await axios.post(`${baseUrl}/api/v1/password/forgot`,
+        const { data } = await axios.post(`${API_BASE_URL}/api/v1/password/forgot`,
             email,
             config
         );
@@ -82,7 +82,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
             headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         };
-        const { data } = await axios.put(`${baseUrl}/api/v1/password/reset/${token}`,
+        const { data } = await axios.put(`${API_BASE_URL}/api/v1/password/reset/${token}`,
             passwords,
             config
         );
@@ -100,7 +100,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
             headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         };
-        const { data } = await axios.put(`${baseUrl}/api/v1/admin/user/${id}`,
+        const { data } = await axios.put(`${API_BASE_URL}/api/v1/admin/user/${id}`,
             userData,
             config
         );
@@ -118,7 +118,7 @@ export const deleteUser = (id) => async (dispatch) => {
             headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         };
-        const { data } = await axios.delete(`${baseUrl}/api/v1/admin/user/${id}`, config);
+        const { data } = await axios.delete(`${API_BASE_URL}/api/v1/admin/user/${id}`, config);
         dispatch({ type: DELETE_USER_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: DELETE_USER_FAIL, payload: error.response.data.message });

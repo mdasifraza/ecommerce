@@ -19,7 +19,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { createOrder, clearErrors } from '../../actions/orderAction.js';
 import { useNavigate } from 'react-router-dom';
 import { removeItemsFromCart } from '../../actions/cartAction';
-import { baseUrl } from '../../config';
+import { API_BASE_URL } from '../../config';
 
 const authToken = sessionStorage.getItem("token")
 
@@ -58,7 +58,7 @@ const Payment = () => {
                 headers: { Authorization: `Bearer ${JSON.parse(authToken)}`, 'Content-Type': 'application/json' },
                 withCredentials: true
             };
-            const { data } = await axios.post(`${baseUrl}/api/v1/payment/process`, paymentData, config);
+            const { data } = await axios.post(`${API_BASE_URL}/api/v1/payment/process`, paymentData, config);
             // const { data } = await axios.post(`/api/v1/payment/process`, paymentData, config);
 
             const client_secret = data.client_secret;
